@@ -1,11 +1,10 @@
-
  { "name": "SoccerNews",
   "short_name": "SoccerNews",
   "theme_color": "#00e5ff",
   "background_color": "#00e5ff",
   "display": "standalone",
-  "Scope": "test/",
-  "start_url": "test/index.html",
+  "Scope": "test",
+  "start_url": "index.html",
   "gcm_sender_id": "540043360209",
   "icons": [
     {
