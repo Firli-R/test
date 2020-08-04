@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <link rel="apple-touch-icon" href="/custom_icon.png">
+    <title>SoccerNews</title>
+    <meta name="description" content="Aplikasi yang memberitahu informasi seputar sepak bola" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="SoccerNews/css/materialize.min.css" />
+    <link rel="stylesheet" href="SoccerNews/css/style.css">
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#00e5ff" />
+  </head>
+  <body>
+    <!-- Navigasi -->
+    <nav class="cyan accent-2" role="navigation">
+      <div class="nav-wrapper container">
+        <a href="#" class="flow-text black-text" id="logo-container"><img src="/images/icon.png" width="40px">SoccerNews</a>
+        <a href="#" class="sidenav-trigger black-text" data-target="nav-mobile">&#9776;</a>
+
+        <ul class="topnav right hide-on-med-and-down"></ul>
+        <ul class="sidenav" id="nav-mobile"></ul>
+      </div>
+    </nav>
+    <!-- Akhir Navigasi -->
+
+    <div class="container " id="body-content"></div>
+
+    <!-- footer -->
+    <footer class="page-footer cyan accent-2 ">
+      <div class="container">
+        <div class="row">
+          <div class="col l4 s12 center">
+            <h5 class="black-text">Hai</h5>
+            <p class="black-text text-lighten-4">terima kasih ya sudah mau mampir di mini web kami jangan lupa untuk follow my social media</p>
+          </div>
+          <div class="col l4 offset-l4 s12 center">
+            <h5 class="black-text" style="padding-right:10px;">Social Media</h5>
+            <ul class="row">
+              <li class="col l2 offset-l4 s2 offset-s4"><a class="black-text  " href="https://www.instagram.com/firli.ramadan1/"><img src="images/instagram1.png" alt="instagram" width="20px" ></a></li>
+              <li class="col l2 s2"><a class="black-text  " href="https://www.facebook.com/firlisr"><img src="images/facebook1.png" alt="facebook" width="20px"></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-copyright cyan accent-3">
+        <div class="container">
+        <p class="black-text center">Copyright &#169; 2020 Pt.informasi.All Right Reserved</p>
+        </div>
+      </div>
+    </footer>
+    <!-- akhir footer -->
+
+    <script src="SoccerNews/js/materialize.min.js"></script>
+    <script src="SoccerNews/js/nav.js"></script>
+    <script src="SoccerNews/js/api.js"></script>
+    <script src="SoccerNews/js/main.js"></script>
+    <script src="SoccerNews/js/idb.js"></script>
+    <script src="SoccerNews/js/db.js"></script>
+    <script>
+      // REGISTER SERVICE WORKER
+      if (!('serviceWorker' in navigator)) {
+      console.log("Service worker tidak didukung browser ini.");
+    } else {
+      registerServiceWorker();
+      requestPermission();
+    }
+    // Register service worker
+    function registerServiceWorker() {
+      return navigator.serviceWorker.register('service-worker.js')
+        .then(function (registration) {
+          console.log('Registrasi service worker berhasil.');
+          return registration;
+        })
+        .catch(function (err) {
+          console.error('Registrasi service worker gagal.', err);
+        });
+    }
+    function requestPermission() {
+    if ('Notification' in window) {
+      Notification.requestPermission().then(function (result) {
+        if (result === "denied") {
+          console.log("Fitur notifikasi tidak diijinkan.");
+          return;
+        } else if (result === "default") {
+          console.error("Pengguna menutup kotak dialog permintaan ijin.");
+          return;
+        }
+        
+        if (('PushManager' in window)) {
+        navigator.serviceWorker.getRegistration().then(function(registration) {
+            registration.pushManager.subscribe({
+                userVisibleOnly: true,
+                applicationServerKey:  urlBase64ToUint8Array("BJIy06hoPv8yITfSyFtpapPpuzBK0T6dU4FnqQMIilyPp56acp8s3Zh7tr4i-tShcwFJVvFcVd3S7SHyHn-hvQw")
+            }).then(function(subscribe) {
+                console.log('Berhasil melakukan subscribe dengan endpoint: ', subscribe.endpoint);
+                console.log('Berhasil melakukan subscribe dengan p256dh key: ', btoa(String.fromCharCode.apply(
+                    null, new Uint8Array(subscribe.getKey('p256dh')))));
+                console.log('Berhasil melakukan subscribe dengan auth key: ', btoa(String.fromCharCode.apply(
+                    null, new Uint8Array(subscribe.getKey('auth')))));
+            }).catch(function(e) {
+                console.error('Tidak dapat melakukan subscribe ', e.message);
+            });
+    });
+}
+      });
+    }
+    }
+
+    function urlBase64ToUint8Array(base64String) {
+    const padding = '='.repeat((4 - base64String.length % 4) % 4);
+    const base64 = (base64String + padding)
+        .replace(/-/g, '+')
+        .replace(/_/g, '/');
+    const rawData = window.atob(base64);
+    const outputArray = new Uint8Array(rawData.length);
+    for (let i = 0; i < rawData.length; ++i) {
+        outputArray[i] = rawData.charCodeAt(i);
+    }
+    return outputArray;
+    }
+
+      // REQUEST API UNTUK PERTAMA KALI
+      document.addEventListener("DOMContentLoaded", function() {
+        getKlasmen();
+      });
+      
+    </script>
+  </body>
+</html>

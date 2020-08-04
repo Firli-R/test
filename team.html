@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>SoccerNews</title>
+    <meta name="description" content="Aplikasi yang memberitahu informasi seputar sepak bola" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="SoccerNews/css/materialize.min.css" />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#00e5ff" />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Navigasi -->
+    <nav class="cyan accent-2" role="navigation">
+      <div class="nav-wrapper container">
+        <a href="./index.html" class="flow-text black-text" id="logo-container"> <img src="/images/icon.png" width="40px">SoccerNews</a>
+        <a href="./index.html" class="sidenav-trigger" data-target="nav-mobile">
+          <i class="material-icons black-text">arrow_back</i>
+        </a>
+        <ul class="topnav right hide-on-med-and-down"></ul>
+        <ul class="sidenav" id="nav-mobile"></ul>
+      </div>
+    </nav>
+    <!-- Akhir Navigasi -->
+
+    <div class="container" id="body-content"></div>
+    <div class="fixed-action-btn" >
+      <a class="btn-floating btn-large red btn waves-effect waves-green" id="save">
+      <i class="large material-icons">save</i>
+      </a>
+    </div>
+
+    <!-- footer -->
+    <footer class="page-footer cyan accent-2 ">
+      <div class="container">
+        <div class="row">
+          <div class="col l4 s12 center">
+            <h5 class="black-text">Hai</h5>
+            <p class="black-text text-lighten-4">terima kasih ya sudah mau mampir di mini web kami jangan lupa untuk follow my social media</p>
+          </div>
+          <div class="col l4 offset-l4 s12 center">
+            <h5 class="black-text" style="padding-right:10px;">Social Media</h5>
+            <ul class="row">
+              <li class="col l2 offset-l4 s2 offset-s4"><a class="black-text  " href="https://www.instagram.com/firli.ramadan1/"><img src="images/instagram1.png" alt="instagram" width="20px" ></a></li>
+              <li class="col l2 s2"><a class="black-text  " href="https://www.facebook.com/firlisr"><img src="images/facebook1.png" alt="facebook" width="20px"></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-copyright cyan accent-3">
+        <div class="container">
+        <p class="black-text center">Copyright &#169; 2020 Pt.informasi.All Right Reserved</p>
+        </div>
+      </div>
+    </footer>
+    <!-- akhir footer -->
+
+    
+
+    <script
+      type="text/javascript"
+      src="https://unpkg.com/snarkdown@1.0.2/dist/snarkdown.umd.js"
+    ></script>
+    <script src="SoccerNews/js/materialize.min.js"></script>
+    <script src="SoccerNews/js/api.js"></script>
+    <script src="SoccerNews/js/idb.js"></script>
+    <script src="SoccerNews/js/db.js"></script>
+    <script src="SoccerNews/js/main.js"></script>
+
+
+    <script>
+      // REGISTER SERVICE WORKER
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", function() {
+          navigator.serviceWorker
+            .register("/service-worker.js")
+            .then(function() {
+              console.log("Pendaftaran ServiceWorker berhasil");
+            })
+            .catch(function() {
+              console.log("Pendaftaran ServiceWorker gagal");
+            });
+        });
+      } else {
+        console.log("ServiceWorker belum didukung browser ini.");
+      }
+      
+
+      document.addEventListener("DOMContentLoaded", function() {
+          var item = getTeamById();
+      // Tambakan baris kode di bawah
+          var save = document.getElementById("save");
+          save.onclick = function() {
+          console.log("Tombol FAB di klik.");
+          save.onclick = M.toast({html: 'data berhasil disimpan'});
+          save.style.display = 'none';
+          item.then(function (team) {
+            saveForLater(team);
+
+        });
+    }
+});
+
+    </script>
+  </body>
+</html>
