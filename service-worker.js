@@ -1,5 +1,6 @@
 const CACHE_NAME = "soccernews-v1.5";
 let urlsToCache = [
+  "test",
   "test/nav.html",
   "test/index.html",
   "test/team.html",
@@ -80,7 +81,7 @@ self.addEventListener('push', function(event) {
   var options = {
     body: "haloo",
     icon: 'images/icon.png',
-		badge: 'images/icon.png',
+    badge:'images/icon.png',
     vibrate: [100, 50, 100],
     data: {
       dateOfArrival: Date.now(),
